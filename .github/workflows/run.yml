@@ -1,0 +1,28 @@
+name: CI - Windows
+on: [pull_request, push]
+
+jobs:
+  run:
+    name: "🚀 Run Python"
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: "🧰 Checkout"
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: "📥 Install dependencies"
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: >
+            mingw-w64-x86_64-python
+
+      - name: "🚀 Run Python"
+        run: |
+          python info.py
